@@ -142,9 +142,3 @@ Replace YEAR and Your Name with the appropriate values and add a LICENSE file.
 
 Maintainer: JaZeeGH
 GitHub: https://github.com/JaZeeGH
-
----
-
-If you'd like, I can:
-- Update the README inside the repository directly (I can create a pull request or push a branch if you want — tell me where to put it), or
-- Tailor the usage examples to the exact filenames and commands present in your repo (I can scan the repo and adapt the README to match actual scripts). Which would you prefer?
