@@ -1,144 +1,158 @@
 # Bash Car Manager
 
-A small, portable Bash-based car manager utility that provides a simple CLI for managing a collection of cars (add, remove, list, update, and simple actions). This repository contains Bash scripts intended to be lightweight, dependency-free (POSIX sh / Bash), and easy to extend.
+A small, menu-driven Bash program to manage a collection of cars.
+
+This script demonstrates basic Bash constructs—loops, case statements, functions, and user input—and can serve as both a learning example and a starting point for larger CLI tools.
+
+---
+
+## Table of Contents
+
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Menu Overview](#menu-overview)
+- [Contributing](#contributing)
+- [License](#license)
+
+---
 
 ## Features
 
-- Add and remove car entries
-- List and search cars
-- Edit car properties (make, model, year, mileage)
-- Plain-text storage (CSV or simple file-based DB) for portability
-- Creating Backup of the simple DB
-- Menu-driven CLI suitable for small demos, learning Bash scripting, or quick local tooling
+- **Interactive menu:** Navigate using simple numeric choices.
+- **CRUD operations:** Add, delete, list, and search cars in your inventory.
+- **Flexible search:** Filter by make, model, or mileage.
+- **Graceful exit:** Friendly goodbye message on exit.
 
-## Requirements
-
-- Bash (or POSIX-compliant shell). Tested with Bash 4.x+.
-- Basic Unix command-line utilities: awk, sed, grep, cut, printf, mkdir, rm (usually available on Linux/macOS).
-- No external packages required.
+---
 
 ## Installation
 
-1. Clone the repository:
-   git clone https://github.com/JaZeeGH/Bash-Car_Manager.git
+Clone the repository:
 
-2. Enter the project directory:
-   cd Bash-Car_Manager
+```sh
+git clone https://github.com/JaZeeGH/Bash-Car_Manager.git
+cd Bash_Application
+```
 
-3. Make the main script executable (replace `car_manager.sh` with the actual script filename if different):
-   chmod +x car_manager.sh
+Make the script executable:
 
-4. (Optional) Move it to a location on your PATH:
-   sudo mv car_manager.sh /usr/local/bin/car-manager
+```sh
+chmod +x car_manager.sh   # replace with the actual filename if different
+```
+
+(Optional) Move it to a directory in your `$PATH`:
+
+```sh
+sudo mv car_manager.sh /usr/local/bin/
+```
+
+After this, you can launch the program from anywhere with `car_manager.sh`.
+
+---
 
 ## Usage
 
-Basic usage (from the project directory):
+Run the script directly:
+
+```sh
 ./car_manager.sh
+```
 
-Or, if installed to PATH:
-car-manager
+Or, if you placed it in `$PATH`:
 
-Typical commands/menu options (these may vary depending on the script implementation):
+```sh
+car_manager.sh
+```
 
-- Add a car:
-  ./car_manager.sh add
-  # or
-  ./car_manager.sh add --make "Toyota" --model "Corolla" --year 2015 --mileage 72000
+You’ll be presented with the main menu:
 
-- List cars:
-  ./car_manager.sh list
-  ./car_manager.sh list --filter "owner:Alice"
+```
+1) Add New Cars
+2) Delete Cars
+3) List Cars
+4) Search Cars
+5) Backup
+6) Exit
+Please select from one of the following options:
+```
 
-- View a car:
-  ./car_manager.sh view <car-id>
+Enter the number corresponding to your desired action and press Enter.
 
-- Update a car:
-  ./car_manager.sh update <car-id> --mileage 73000
+---
 
-- Remove a car:
-  ./car_manager.sh remove <car-id>
+## Menu Overview
 
-- Mark serviced / sold:
-  ./car_manager.sh action <car-id> --mark serviced
+### Add New Cars
 
-If the repository provides an interactive menu, running the script without arguments will open that menu.
+- Prompts for Make, Model, Year, and Mileage.
+- Stores each record in a plain-text file (`cars.db` by default).
 
-## Data storage
+### Delete Cars
 
-This project stores records in a simple text/CSV file (e.g., data/cars.db or cars.csv). The format is intentionally simple for readability and easy manipulation with standard text tools.
+- Shows a numbered list of stored cars.
+- Choose the index to remove; the file is rewritten without that entry.
 
-Suggested columns:
-- id, make, model, year, mileage
+### List Cars
 
-Back up the data file before bulk editing:
-cp data/cars.db data/cars.db.bak
+- Prints the entire inventory in a tidy table.
 
-## Configuration
+### Search Cars
 
-- Data directory: data/ (create if missing)
-- Data file: data/cars.db (or cars.csv)
-- Edit configuration variables near the top of the main script to change paths or defaults (e.g., DB_FILE, DATE_CMD).
+Sub-menu:
+```
+1) Search by Make
+2) Search by Model
+3) Search by Mileage
+4) Return to Main Menu
+5) Exit
+```
+- Each option filters the database and displays matching rows.
+- Selecting 4 returns you to the main menu; 5 exits immediately.
 
-## Examples
+### Backup
+```
+1) Create Backup
+2) Restore Backup
+3) Delete Backup
+4) Return To Main Menu
+5) Exit
+```
+- Creat a backup file of the database file (`cars.db`)
+- Restore the data into `cars.db` 
+- Delete the backup file
 
-Add a car using CLI flags (example):
-./car_manager.sh add --regNumber "00-D-0000" --make "Ford" --model "Mustang" --year 1967 --mileage 120000"
+### Exit
 
-List and filter:
-./car_manager.sh list | grep Mustang
+- Displays a farewell message:
 
-Export to CSV (if provided):
-./car_manager.sh export --format csv > /tmp/export.csv
+  > Thank you for using the application. Good Bye!
 
-## Extending / Development
+- The script terminates cleanly.
 
-- Add new actions by creating new functions in the script and wiring them into the command/menu dispatcher.
-- Consider splitting logic into multiple files for maintainability (e.g., lib/io.sh, lib/db.sh, lib/actions.sh).
-- Add unit-style tests by writing small shell test scripts and/or using bats (Bash Automated Testing System) if you want automated testing.
-
-## Troubleshooting
-
-- Permission denied when running: ensure the script is executable (chmod +x car_manager.sh).
-- Missing commands: ensure required utilities (awk, sed, grep) are installed and available on PATH.
-- Corrupt data: restore from data/cars.db.bak if present.
+---
 
 ## Contributing
 
-Contributions are welcome. A typical workflow:
+1. Fork the repository.
+2. Create a feature branch:
+   ```sh
+   git checkout -b my-feature
+   ```
+3. Commit your changes:
+   ```sh
+   git commit -am 'Add new feature'
+   ```
+4. Push the branch:
+   ```sh
+   git push origin my-feature
+   ```
+5. Open a Pull Request describing your change.
 
-1. Fork the repo.
-2. Create a feature branch (git checkout -b feature/my-change).
-3. Make changes and test locally.
-4. Submit a PR with a clear description of the change.
+Please keep the code style consistent (indent with 4 spaces, use `snake_case` for variable names) and add comments for any new functions.
 
-Please follow shell scripting best practices and keep changes simple and well-documented. If you add new features that modify the data format, include a migration step or document the change.
+---
 
 ## License
 
-MIT License
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-Replace YEAR and Your Name with the appropriate values and add a LICENSE file.
-
-## Contact
-
-Maintainer: JaZeeGH
-GitHub: https://github.com/JaZeeGH
+MIT License - Please see LICENSE file for additional details
